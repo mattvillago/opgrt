@@ -34,6 +34,7 @@
 		background-color: #303030;
 		color: white;
 		flex-wrap: wrap;
+		z-index: 500;
 		
 	}
 	#status-bar input, #status-bar select {
@@ -49,6 +50,75 @@
 		padding-right: 1em;
 		margin: auto 0;
 	}
+	
+/* drop down checkboxes */	
+.dropdown-check-list {
+  display: inline-block;
+  position: relative;       /* establish a containing block for the menu */
+  vertical-align: top;      /* align all wrappers at their top edge */
+  z-index: 200;
+}
+
+.dropdown-check-list .anchor {
+  position: relative;
+  cursor: pointer;
+  display: inline-block;
+  padding: 5px 50px 5px 10px;
+  border: 1px solid #ccc;
+  vertical-align: top; 
+}
+
+.dropdown-check-list .anchor:after {
+  position: absolute;
+  content: "";
+  border-left: 2px solid black;
+  border-top: 2px solid black;
+  padding: 5px;
+  right: 10px;
+  top: 20%;
+  -moz-transform: rotate(-135deg);
+  -ms-transform: rotate(-135deg);
+  -o-transform: rotate(-135deg);
+  -webkit-transform: rotate(-135deg);
+  transform: rotate(-135deg);
+}
+
+.dropdown-check-list .anchor:active:after {
+  right: 8px;
+  top: 21%;
+}
+
+.dropdown-check-list .items {
+  position: absolute;       /* float on top of other content */
+  top: 100%;
+  width: 85%;
+  background-color: #303030;
+  padding: 2px;
+  display: none;
+  margin: 0;
+  border: 1px solid #ccc;
+  border-top: none;
+  z-index: 201;   
+}
+
+.dropdown-check-list .items li {
+  list-style: none;
+  margin-bottom: 0.5em;
+ 
+}
+
+.dropdown-check-list.visible .anchor {
+  color: #0094ff;
+}
+
+.dropdown-check-list.visible .items {
+  display: block;
+}
+
+
+
+
+
 	#hotspot-label-container {
 		position: absolute;
 		top: 150px;
@@ -74,7 +144,7 @@
         display: flex;
         flex-direction: row;
         transition: transform 0.3s ease-in-out;
-		z-index: 20;
+		z-index: 300;
         margin-top: 60px;
 		border-top: solid 2px black;
     }
@@ -132,12 +202,17 @@
     left: 0;
     width: auto;
     height: auto;
-	z-index: 10;
+	z-index: 100;
 	cursor: crosshair;
+}
+#resection-template {
+	position: relative;
+	z-index: 10;
 }
 .disable-pointer {
 	pointer-events: none;
 }
+
 .hidden {
 	display: none;
 }
@@ -212,7 +287,53 @@
 	<div id="status-bar">
 		<div>Patient ID:<input type="text" id="patient-id" value="" size="10" maxlength="20" /></div> 
 		<div><span>Selected Areas:</span> <input type="text" id="label-data" value="" size="30" maxlength="100" /></div>
-		<div>Tumor Depth (cm):<input type="text" title="Maximum Palpable Tumor Depth" id="tumor-depth" value="" size="4" maxlength="8" /></div>
+		<div id="MusclesResectedList" class="dropdown-check-list" tabindex="100">
+<span class="anchor" id="MR-anchor">Muscles Resected (click all that apply)</span>
+<ul class="items"><li><input type="checkbox" id="MR-Intrinsic" name="MR-Intrinsic" value="Intrinsic Muscles" />
+<label for="MR-Intrinsic">Intrinsic Muscles</label></li>
+<li><input type="checkbox" id="MR-Genioglossus" name="MR-Genioglossus" value="Genioglossus" />
+<label for="MR-Genioglossus">Genioglossus</label></li>
+<li><input type="checkbox" id="MR-Hyoglossus" name="MR-Hyoglossus" value="Hyoglossus">
+<label for="MR-Hyoglossus">Hyoglossus</label></li>
+<li><input type="checkbox" id="MR-Palatoglossus" name="MR-Palatoglossus" value="Palatoglossus" />
+<label for="MR-Palatoglossus">Palatoglossus</label></li>
+<li><input type="checkbox" id="MR-Styloglossus" name="MR-Styloglossus" value="Styloglossus" />
+<label for="MR-Styloglossus">Styloglossus</label></li>
+<li><input type="checkbox" id="MR-Geniohyoid" name="MR-Geniohyoid" value="Geniohyoid" />
+<label for="MR-Geniohyoid">Geniohyoid</label></li>
+<li><input type="checkbox" id="MR-Mylohyoid" name="MR-Mylohyoid" value="Mylohyoid" />
+<label for="MR-Mylohyoid">Mylohyoid</label></li>
+<li><input type="checkbox" id="MR-Stylohyoid" name="MR-Stylohyoid" value="Stylohyoid" />
+<label for="MR-Stylohyoid">Stylohyoid</label></li>
+<li><input type="checkbox" id="MR-Digastric" name="MR-Digastric" value="Digastric" />
+<label for="MR-Digastric">Digastric</label></li>
+<li><input type="checkbox" id="MR-Palatopharyngeus" name="MR-Palatopharyngeus" value="Palatopharyngeus" />
+<label for="MR-Palatopharyngeus">Palatopharyngeus</label></li>
+<li><input type="checkbox" id="MR-Stylopharyngeus" name="MR-Stylopharyngeus" value="Stylopharyngeus" />
+<label for="MR-Stylopharyngeus">Stylopharyngeus</label></li>
+<li><input type="checkbox" id="MR-Salpingopharyngeus" name="MR-Salpingopharyngeus" value="Salpingopharyngeus" />
+<label for="MR-Salpingopharyngeus">Salpingopharyngeus</label></li>
+<li><input type="checkbox" id="MR-Superior" name="MR-Superior" value="Superior Constrictor Muscle" />
+<label for="MR-Superior">Superior Constrictor Muscle</label></li>
+<li><input type="checkbox" id="MR-Levator" name="MR-Levator" value="Levator Veli Palatini" />
+<label for="MR-Levator">Levator Veli Palatini</label></li>
+<li><input type="checkbox" id="MR-Tensor" name="MR-Tensor" value="Tensor Veli Palatini" />
+<label for="MR-Tensor">Tensor Veli Palatini</label></li>
+<li><input type="checkbox" id="MR-Musculus" name="MR-Musculus" value="Musculus Uvulae" />
+<label for="MR-Musculus">Musculus Uvulae</label></li>
+</ul>
+</div>
+
+<div id="NervesResectedList" class="dropdown-check-list" tabindex="100">
+<span class="anchor" id="NR-anchor">Nerves Resected (click all that apply)</span>
+<ul class="items">
+<li><input type="checkbox" id="NR-Lingual" name="MR-Lingual" value="Lingual Nerve" />
+<label for="NR-Lingual">Lingual Nerve</label></li>
+<li><input type="checkbox" id="NR-Hypoglossal" name="MR-Hypoglossal" value="Hypoglossal Nerve" />
+<label for="NR-Hypoglossal">Hypoglossal Nerve</label></li>
+<li><input type="checkbox" id="NR-Glossopharyngeal" name="MR-Glossopharyngeal" value="Glossopharyngeal Nerve" />
+<label for="NR-Glossopharyngeal">Glossopharyngeal Nerve</label></li></ul>
+</div>
 		<div>Lingual Nerve Sarcifice:
 			<select name="lns" id="lns-select">
 				<option value="n/a">n/a</option>
@@ -271,7 +392,7 @@
 </div>
         </div>
         <div class="menu-tab" id="menu-toggle">☰</div>
-    </div>
+</div>
 <div id="container" class="container">
 <!-- 
 
@@ -290,6 +411,7 @@
 <svg id="resection-template" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 450 980">
 
 //-->
+
 <canvas id="drawing-canvas" class="drawing-canvas"></canvas>
 <svg id="resection-template" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 450 970">
   <defs>
@@ -1702,6 +1824,7 @@
 
 </div>
 
+
 <script>
  document.addEventListener('DOMContentLoaded', () => {
     const clearButton = document.getElementById('clear-canvas-btn');
@@ -1714,6 +1837,50 @@
 	const legendButton = document.getElementById('legend-btn');
 	const helpMenu = document.getElementById('help-menu');
 	const legendMenu = document.getElementById('legend-menu');
+	
+    const nrAnchor = document.getElementById('NR-anchor');
+    const mrAnchor = document.getElementById('MR-anchor');
+	
+    // toggle your “visible” class on click
+    nrAnchor.addEventListener('click', function(evt) {
+      var checkList = document.getElementById('NervesResectedList');
+      checkList.classList.toggle('visible');
+    });
+
+    // toggle your “visible” class on click
+    mrAnchor.addEventListener('click', function(evt) {
+   	  var checkList = document.getElementById('MusclesResectedList');
+      checkList.classList.toggle('visible');
+    });
+	
+	function getDropdownSelectedValues(dropdownId) {
+		const selector = `#${dropdownId} .items input[type="checkbox"]:checked`;
+		const checked = document.querySelectorAll(selector);
+		return Array.from(checked)
+		.map(cb => cb.value)
+		.join('; ');
+	}
+	
+	
+	function resetDropdown(dropdownId) {
+		const wrapper = document.getElementById(dropdownId);
+		if (!wrapper) return;
+		// 1) Uncheck all boxes
+		wrapper.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+			cb.checked = false;
+			// if you have change‐handlers wired, you may want to fire them:
+			cb.dispatchEvent(new Event('change'));
+		});
+    
+		// 2) Hide the menu if open
+		wrapper.classList.remove('visible');
+		
+		// 3) Clear the matching hidden <input> (if you’re using one)
+		const hidden = document.getElementById(`${dropdownId}-values`);
+		if (hidden) hidden.value = '';
+	}
+
+  
 	
 	document.getElementById('hns-select').addEventListener("change", () => {
 		updateLabelData();
@@ -2023,18 +2190,24 @@
         });
 
         selectedAreas.clear();
+		
+		
+		resetDropdown("MusclesResectedList");
+		resetDropdown("NervesResectedList");
     });
 	 // Export selected areas
 	function updateLabelData() {
         let textInput = document.getElementById('label-data');
         textInput.value = Array.from(selectedAreas).join(', ');
 
+/*
         if (document.getElementById('tumor-depth').value.replace(/[^0-9\.]/g, "") != "") {
             if (Array.from(selectedAreas).length > 0) {
                 textInput.value += ", ";
             }
             textInput.value += "D=" + document.getElementById('tumor-depth').value.replace(/[^0-9\.]/g, "") + "cm";
         }
+*/
 		if (document.getElementById('lns-select').value != "n/a") {
             if (textInput.value.length > 0) {
                 textInput.value += ", ";
@@ -2049,9 +2222,11 @@
         }
 	}
 	
+	/*
 	document.getElementById('tumor-depth').addEventListener('blur', () => {
 		updateLabelData();
 	});
+	*/
 	
 	
 	document.getElementById('export-csv-btn').addEventListener('click', () => {
@@ -2092,10 +2267,21 @@
 			}
 		});
 
+/*
 		// Add depth column
 		headers.push('Depth');
 		const depthValue = document.getElementById('tumor-depth').value.replace(/[^0-9\.]/g, ""); // Extract numeric depth
 		values.push(depthValue ? depthValue + 'cm' : 'N/A');
+*/
+		// Add Muscles Resected
+		headers.push('MR');
+		const MRValue = getDropdownSelectedValues("MusclesResectedList");
+		values.push(MRValue);
+		
+		// Add Nerves Resected
+		headers.push('NR');
+		const NRValue = getDropdownSelectedValues("NervesResectedList");
+		values.push(NRValue);
 		
 		// Add Lingual Nerve Sacrifice
 		headers.push('LNS');
